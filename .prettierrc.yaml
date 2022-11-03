@@ -1,0 +1,43 @@
+# https://prettier.io/docs/en/options.html
+
+# https://prettier.io/docs/en/options.html#print-width
+printWidth: 120
+# https://prettier.io/docs/en/options.html#tab-width
+tabWidth: 2
+# https://prettier.io/docs/en/options.html#tabs
+useTabs: false
+# https://prettier.io/docs/en/options.html#semicolons
+semi: false
+# https://prettier.io/docs/en/options.html#quotes
+singleQuote: true
+# https://prettier.io/docs/en/options.html#quote-props
+quoteProps: as-needed
+# https://prettier.io/docs/en/options.html#jsx-quotes
+jsxSingleQuote: true
+# https://prettier.io/docs/en/options.html#trailing-commas
+trailingComma: all
+# https://prettier.io/docs/en/options.html#bracket-spacing
+bracketSpacing: true
+# https://prettier.io/docs/en/options.html#bracket-line
+bracketSameLine: false
+# https://prettier.io/docs/en/options.html#arrow-function-parentheses
+arrowParens: avoid
+# https://prettier.io/docs/en/options.html#prose-wrap
+proseWrap: preserve
+# https://prettier.io/docs/en/options.html#html-whitespace-sensitivity
+## https://prettier.io/blog/2018/11/07/1.15.0.html#whitespace-sensitive-formatting
+htmlWhitespaceSensitivity: ignore
+# https://prettier.io/docs/en/options.html#end-of-line
+endOfLine: lf
+# https://prettier.io/docs/en/options.html#embedded-language-formatting
+embeddedLanguageFormatting: auto
+# https://prettier.io/docs/en/options.html#single-attribute-per-line
+singleAttributePerLine: true
+
+plugins:
+  # https://github.com/PlasmoHQ/prettier-plugin-sort-imports
+  - "@plasmohq/prettier-plugin-sort-imports"
+
+importOrder: ["^@plasmohq/(.*)$", "^~(.*)$", "^[./]"]
+importOrderSeparation: true
+importOrderSortSpecifiers: true
