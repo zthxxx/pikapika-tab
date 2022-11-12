@@ -1,7 +1,7 @@
 import { useState, useCallback } from 'react'
 import {
   getRandomPicture,
-  restorePictures,
+  savePictures,
 } from './store'
 import { fileToBlobUrl } from './file'
 import { SelectButton } from './SelectButton'
@@ -14,7 +14,7 @@ export const NewTabPage = () => {
   } = useBackgroundUrl()
 
   const handleSelect = useCallback(async (files: File[]) => {
-    await restorePictures(files)
+    await savePictures(files)
     const randomPicture = await getRandomPicture()
     if (!randomPicture) return
 

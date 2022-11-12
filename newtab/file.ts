@@ -1,4 +1,8 @@
 export type HashKey = `sha1-${string}`
+export type ThumbKey = `thumb-sha1-${string}`
+
+/** width x height pixel */
+export const defaultThumbSize: [number, number] = [480, 270]
 
 function bufferToHex(buffer: ArrayBuffer) {
   return [...new Uint8Array(buffer)]
@@ -13,19 +17,43 @@ export const getFileHash = async (file: File): Promise<HashKey> => {
   return `sha1-${sha1Hex}`
 }
 
-export const fileToBlobUrl = (file?: File): string | Promise<string> => {
-  if (!file) return ''
 
-  const reader = new FileReader()
-  return new Promise(resolve => {
-    reader.addEventListener(
-      'load',
-      () => {
-        resolve(reader.result as string)
-      },
-      false,
-    )
+const canvas = document.createElement('canvas')
+const ctx = canvas.getContext('2d')!
 
-    reader.readAsDataURL(file);
+export const generateThumbnail = ({ file, thumbSize = defaultThumbSize }: {
+  file: File,
+  /** width x height pixel */
+  thumbSize?: [number, number],
+  /** return thumb blob url */
+}): Promise<Blob> => {
+  return new Promise((resolve) => {
+    const img = new Image()
+    img.onload = function () {
+      const scaleRatio = Math.min(thumbSize[0] / img.width, thumbSize[1] / img.height)
+      const w = img.width * scaleRatio
+      const h = img.height * scaleRatio
+
+      console.log('TCL ~ generateThumbnail ~ img size', [img.width, img.height])
+      console.log('TCL ~ generateThumbnail ~ canvas size', [canvas.width, canvas.height])
+      console.log('TCL ~ generateThumbnail ~ thumb size', [w, h])
+
+      ctx.clearRect(0, 0, canvas.width, canvas.height)
+      canvas.width = w
+      canvas.height = h
+
+      ctx.drawImage(img, 0, 0, w, h)
+      canvas.toBlob(
+        blob => resolve(blob!),
+        file.type,
+        0.8,
+      )
+    }
+    img.src = URL.createObjectURL(file)
   })
+}
+
+export const fileToBlobUrl = (file?: File | Blob): string | Promise<string> => {
+  if (!file) return ''
+  return URL.createObjectURL(file)
 }

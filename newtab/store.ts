@@ -1,7 +1,9 @@
 import { createInstance } from 'localforage'
 import {
   type HashKey,
+  type ThumbKey,
   getFileHash,
+  generateThumbnail,
 } from './file'
 
 
@@ -12,12 +14,13 @@ export const store = createInstance({
 const listKey = 'picture-list'
 
 
-const getStorePictureList = async (): Promise<`sha1-${string}`[]> => {
+export const getAllPictureKeys = async (): Promise<HashKey[]> => {
   return await store.getItem<HashKey[]>(listKey) ?? []
 }
 
+
 export const getRandomPicture = async (): Promise<File | undefined> => {
-  const pictureList = await getStorePictureList()
+  const pictureList = await getAllPictureKeys()
   if (!pictureList.length) return
 
   const randomIndex = Math.floor(Math.random() * pictureList.length)
@@ -26,9 +29,9 @@ export const getRandomPicture = async (): Promise<File | undefined> => {
   return file ?? undefined
 }
 
-export const restorePictures = async (files: File[]) => {
-  const pictureList = await getStorePictureList()
-  const pictureSet = new Set(pictureList)
+export const savePictures = async (files: File[]) => {
+  const pictureList: HashKey[] = await getAllPictureKeys()
+  const pictureSet: Set<HashKey> = new Set(pictureList)
   const filesMap: Record<HashKey, File> = {}
 
   await Promise.all(files.map(async file => {
@@ -37,18 +40,16 @@ export const restorePictures = async (files: File[]) => {
   }))
 
   const fileKeys = Object.keys(filesMap) as HashKey[]
-  const fileKeySet = new Set(fileKeys)
-
-  const removes = pictureList.filter(key => !fileKeySet.has(key))
   const addition = fileKeys.filter(key => !pictureSet.has(key))
 
-  await Promise.all(removes.map(async key => {
-    await store.removeItem(key)
-  }))
-
   await Promise.all(addition.map(async key => {
+    const file = filesMap[key]
+    const thumb: Blob = await generateThumbnail({ file })
+    const thumbKey: ThumbKey = `thumb-${key}`
     await store.setItem(key, filesMap[key])
+    await store.setItem(thumbKey, thumb)
+    pictureSet.add(key)
   }))
 
-  await store.setItem(listKey, fileKeys)
+  await store.setItem(listKey, [...pictureList, ...addition])
 }

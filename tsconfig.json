@@ -16,7 +16,7 @@
     "noEmit": true,
     "noEmitOnError": false,
     "declaration": true,
-    "declarationMap": false,
+    "declarationMap": true,
     "moduleResolution": "node",
     "lib": [
       "DOM",
