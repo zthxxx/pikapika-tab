@@ -2,16 +2,19 @@ import { useRef, useCallback } from 'react'
 
 
 export interface SelectButtonProps {
-  onSelect?: (files: File[]) => void
+  onSelect?: (files: File[]) => void;
+  disabled?: boolean;
 }
 
 export const SelectButton = (props: SelectButtonProps) => {
-  const { onSelect } = props
+  const { onSelect, disabled = false } = props
   const { openSelector } = useFileSelector()
 
   const handleClick = useCallback(() => {
+    if (disabled) return
+
     openSelector(onSelect)
-  }, [])
+  }, [disabled])
 
   return (
     <button
@@ -26,11 +29,17 @@ export const SelectButton = (props: SelectButtonProps) => {
         transition-[width,color,background-color,border-color] duration-200 ease-in-out
 
         after:content-['+'] after:relative after:-top-px
-        hover:after:content-['+_Pictures']
-        hover:w-[84px] hover:text-sm hover:font-normal
-        hover:text-gray-200 hover:border-gray-200 hover:bg-gray-800/40
+        ${disabled
+          ? 'opacity-50 cursor-not-allowed'
+          : `
+            hover:after:content-['+_Pictures']
+            hover:w-[84px] hover:text-sm hover:font-normal
+            hover:text-gray-200 hover:border-gray-200 hover:bg-gray-800/40
+          `
+        }
       `}
       onClick={handleClick}
+      disabled={disabled}
     />
   )
 }

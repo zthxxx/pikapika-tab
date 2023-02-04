@@ -34,10 +34,6 @@ export const generateThumbnail = ({ file, thumbSize = defaultThumbSize }: {
       const w = img.width * scaleRatio
       const h = img.height * scaleRatio
 
-      console.log('TCL ~ generateThumbnail ~ img size', [img.width, img.height])
-      console.log('TCL ~ generateThumbnail ~ canvas size', [canvas.width, canvas.height])
-      console.log('TCL ~ generateThumbnail ~ thumb size', [w, h])
-
       ctx.clearRect(0, 0, canvas.width, canvas.height)
       canvas.width = w
       canvas.height = h
@@ -53,7 +49,7 @@ export const generateThumbnail = ({ file, thumbSize = defaultThumbSize }: {
   })
 }
 
-export const fileToBlobUrl = (file?: File | Blob): string | Promise<string> => {
+export const fileToBlobUrl = (file?: File | Blob): string => {
   if (!file) return ''
   return URL.createObjectURL(file)
 }

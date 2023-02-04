@@ -72,5 +72,9 @@
     "lib",
   ],
 
-  "include": ["./**/*.ts", "./**/*.tsx"],
+  "include": [
+    ".plasmo/index.d.ts",
+    "./**/*.ts",
+    "./**/*.tsx",
+  ],
 }
