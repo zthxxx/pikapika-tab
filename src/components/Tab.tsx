@@ -22,7 +22,8 @@ export const NewTabPage = () => {
 
   const handleSelect = useCallback(async (files: File[]) => {
     const randomPicture = randomOne(files)
-    if (!randomPicture) return
+    if (!randomPicture)
+      return
 
     const backgroundUrl = fileToBlobUrl(randomPicture)
     setBackgroundUrl(`url(${backgroundUrl})`)
@@ -42,20 +43,21 @@ export const NewTabPage = () => {
     <>
       {progress !== null && (
         <div
-          className="fixed top-0 left-0 h-1 bg-pink-400 transition-all duration-500"
+          className='fixed top-0 left-0 h-1 bg-pink-400 transition-all duration-500'
           style={{ width: `${progress * 100}%` }}
         />
       )}
       <div
         className={`
           w-screen h-screen bg-cover bg-center select-none
-          transition-all duration-300 ease-in-out
+          transition-all duration-500 ease-in-out
         `}
         style={{
           backgroundImage: backgroundUrl,
           opacity: backgroundUrl ? 1 : 0,
         }}
       >
+        235asdg
       </div>
 
       <SelectButton
@@ -76,7 +78,8 @@ const useBackgroundUrl = (): {
 
   if (!backgroundUrl) {
     firstPictureUrl.then(async url => {
-      if (!url) return
+      if (!url)
+        return
       setBackgroundUrl(`url(${url})`)
     })
   }
@@ -96,7 +99,8 @@ const useProgress = (): {
 } => {
   const [progress, _setProgress] = useState<number | null>(null)
   const setProgress = (progress: number | null) => {
-    if (progress === null) return _setProgress(null)
+    if (progress === null)
+      return _setProgress(null)
 
     _setProgress(Math.max(0, Math.min(progress, 1)))
   }

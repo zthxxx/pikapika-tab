@@ -8,7 +8,7 @@ import {
 
 
 export const store = createInstance({
-  name: 'pikapika-tab'
+  name: 'pikapika-tab',
 })
 
 const listKey = 'picture-list'
@@ -26,7 +26,8 @@ export const randomOne = <T>(list: T[]): T | undefined => {
 export const getRandomPicture = async (): Promise<File | undefined> => {
   const pictureList = await getAllPictureKeys()
   const fileKey = randomOne(pictureList)
-  if (!fileKey) return
+  if (!fileKey)
+    return
 
   const file = await store.getItem<File>(fileKey)
   return file ?? undefined
@@ -36,7 +37,8 @@ export const savePictures = async ({ files, onProgress }: {
   files: File[];
   onProgress?: (progress: number) => void;
 }) => {
-  if (!files.length) return
+  if (!files.length)
+    return
 
   const pictureList: HashKey[] = await getAllPictureKeys()
   const pictureSet: Set<HashKey> = new Set(pictureList)

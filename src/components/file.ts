@@ -6,8 +6,8 @@ export const defaultThumbSize: [number, number] = [480, 270]
 
 function bufferToHex(buffer: ArrayBuffer) {
   return [...new Uint8Array(buffer)]
-      .map(x => x.toString(16).padStart(2, '0'))
-      .join('');
+    .map(x => x.toString(16).padStart(2, '0'))
+    .join('')
 }
 
 export const getFileHash = async (file: File): Promise<HashKey> => {
@@ -22,9 +22,9 @@ const canvas = document.createElement('canvas')
 const ctx = canvas.getContext('2d')!
 
 export const generateThumbnail = ({ file, thumbSize = defaultThumbSize }: {
-  file: File,
+  file: File;
   /** width x height pixel */
-  thumbSize?: [number, number],
+  thumbSize?: [number, number];
   /** return thumb blob url */
 }): Promise<Blob> => {
   return new Promise((resolve) => {
@@ -50,6 +50,7 @@ export const generateThumbnail = ({ file, thumbSize = defaultThumbSize }: {
 }
 
 export const fileToBlobUrl = (file?: File | Blob): string => {
-  if (!file) return ''
+  if (!file)
+    return ''
   return URL.createObjectURL(file)
 }

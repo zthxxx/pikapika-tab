@@ -1,8 +1,8 @@
 /**
  * @type {import('postcss').ProcessOptions}
  */
- module.exports = {
+module.exports = {
   plugins: {
-    tailwindcss: {}
-  }
+    tailwindcss: {},
+  },
 }

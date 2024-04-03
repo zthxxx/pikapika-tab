@@ -17,7 +17,7 @@
     "noEmitOnError": false,
     "declaration": true,
     "declarationMap": true,
-    "moduleResolution": "node",
+    "moduleResolution": "bundler",
     "lib": [
       "DOM",
       "DOM.Iterable",
@@ -68,8 +68,6 @@
     "node_modules",
     "build",
     "dist",
-    "es",
-    "lib",
   ],
 
   "include": [

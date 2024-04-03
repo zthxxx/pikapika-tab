@@ -1,0 +1,2 @@
+export { NewTabPage } from './Tab'
+

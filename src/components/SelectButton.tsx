@@ -11,7 +11,8 @@ export const SelectButton = (props: SelectButtonProps) => {
   const { openSelector } = useFileSelector()
 
   const handleClick = useCallback(() => {
-    if (disabled) return
+    if (disabled)
+      return
 
     openSelector(onSelect)
   }, [disabled])
@@ -30,13 +31,13 @@ export const SelectButton = (props: SelectButtonProps) => {
 
         after:content-['+'] after:relative after:-top-px
         ${disabled
-          ? 'opacity-50 cursor-not-allowed'
-          : `
+      ? 'opacity-50 cursor-not-allowed'
+      : `
             hover:after:content-['+_Pictures']
             hover:w-[84px] hover:text-sm hover:font-normal
             hover:text-gray-200 hover:border-gray-200 hover:bg-gray-800/40
           `
-        }
+    }
       `}
       onClick={handleClick}
       disabled={disabled}

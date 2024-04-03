@@ -1,4 +1,4 @@
 import './style.css'
-import { NewTabPage } from './Tab'
+import { NewTabPage } from './components'
 
 export default NewTabPage
